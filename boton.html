@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Botón de Mensaje</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .volver {
+      margin: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 15px;
+      background: #444;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #888;
+      transition: 0.3s;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    .volver:hover {
+      background: #666;
+      transform: scale(1.05);
+    }
+
+    button {
+      margin-top: 100px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 20px;
+      background: #ff66b2;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff66b2;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ff3385;
+      box-shadow: 0 0 25px #ff66b2;
+      transform: scale(1.05);
+    }
+
+    #mensaje {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #ffb3d9;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+    <canvas id="estrellas"></canvas>
+    <button class="volver" onclick="location.href='principal.html'">← Volver a la página principal</button>
+  <h1>💬 Quieres hablar conmigo?</h1>
+  <a href="https://wa.me/34671609256" target="_blank">
+  <button>Hablar por WhatsApp</button>
+    </a>
+
+
+  <script>
+
+    const canvas = document.getElementById("estrellas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let estrellas = [];
+    for (let i = 0; i < 200; i++) {
+      estrellas.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2,
+        d: Math.random() * 1
+      });
+    }
+
+    function dibujarEstrellas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      for (let i = 0; i < estrellas.length; i++) {
+        let s = estrellas[i];
+        ctx.moveTo(s.x, s.y);
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+      }
+      ctx.fill();
+      moverEstrellas();
+    }
+
+    function moverEstrellas() {
+      for (let i = 0; i < estrellas.length; i++) {
+        let s = estrellas[i];
+        s.y += s.d;
+        if (s.y > canvas.height) {
+          estrellas[i] = { x: Math.random() * canvas.width, y: 0, r: s.r, d: s.d };
+        }
+      }
+    }
+
+    setInterval(dibujarEstrellas, 50);
+
+    function mensaje() {
+      alert("✨ Quiero hablar contigo ✨");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dedicatorias 💌</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    header a {
+      background: #444;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    header a:hover {
+      background: #ff69b4;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ff8, 0 0 30px #f0f;
+    }
+
+    button {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff85c1;
+      transform: scale(1.05);
+    }
+
+    #frase {
+      margin-top: 40px;
+      font-size: 1.5rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="estrellas"></canvas>
+
+
+  <header>
+    <a href="principal.html">⬅ Volver a la página principal</a>
+  </header>
+
+  <h1>💌 Dedicatorias para Ti 💌</h1>
+  <button onclick="mostrarFrase()">Pulsa para ver una dedicatoria</button>
+  <p id="frase"></p>
+
+  <script>
+    const canvas = document.getElementById("estrellas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let estrellas = [];
+    for (let i = 0; i < 200; i++) {
+      estrellas.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2,
+        d: Math.random() * 1
+      });
+    }
+
+    function dibujarEstrellas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      for (let i = 0; i < estrellas.length; i++) {
+        let s = estrellas[i];
+        ctx.moveTo(s.x, s.y);
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+      }
+      ctx.fill();
+      moverEstrellas();
+    }
+
+    function moverEstrellas() {
+      for (let i = 0; i < estrellas.length; i++) {
+        let s = estrellas[i];
+        s.y += s.d;
+        if (s.y > canvas.height) {
+          estrellas[i] = { x: Math.random() * canvas.width, y: 0, r: s.r, d: s.d };
+        }
+      }
+    }
+
+    setInterval(dibujarEstrellas, 50);
+
+
+    const frases = [
+      "Eres la estrella que ilumina mis noches 🌙✨",
+      "Cada día contigo es un regalo 💖",
+      "Si pudiera pedir un deseo, sería quedarme a tu lado siempre 💫",
+      "Eres mi razón favorita para sonreír 😊",
+      "El universo se vuelve más bonito cuando pienso en ti 🌌"
+    ];
+
+    function mostrarFrase() {
+      const frase = frases[Math.floor(Math.random() * frases.length)];
+      const p = document.getElementById("frase");
+      p.textContent = frase;
+      p.style.opacity = 0; 
+      setTimeout(() => p.style.opacity = 1, 100);
+    }
+  </script>
+</body>
+</html>

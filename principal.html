@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuestra Estrella ✨</title>
+  <style>
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: black;
+        color: white;
+        overflow-y: auto;
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    header {
+      padding: 30px;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ff8, 0 0 30px #f0f;
+    }
+
+    nav {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    nav a {
+      color: #ffccff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ff69b4;
+    }
+
+    main {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }   
+
+    footer {
+      position: fixed;
+      text-align: center;
+      bottom: 10px;
+      width: 100%;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    #momentos {
+    margin-top: 20px;
+    }
+
+    .foto-bloque {
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .foto {
+        display: none;
+        margin: 15px auto;
+        max-width: 300px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        transition: transform 0.3s ease;
+    }
+
+    .foto:hover {
+        transform: scale(1.05);
+    }
+
+    button {
+        background: #ff69b4;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1rem;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    button:hover {
+        background: #ff85c1;
+        transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="estrellas"></canvas>
+
+  <header>✨ Bienvenida a Tú Página ✨</header>
+
+  <nav>
+    <a href="boton.html">🚨 Botón</a>
+    <a href="carta.html">💖 Carta</a>
+    <a href="dedicatoria.html">📜 Dedicatorias</a>
+  </nav>
+
+  <main>
+    <p>
+      Aquí empieza un pequeño espacio solo para ti.  
+      Un rincón del universo donde siempre tendrás un lugar especial ✨🤎
+    </p>
+    <p>Iré actualizando la página poco a poco</p>
+  </main>
+
+  <footer>
+    Hecho con 💖 por Unai
+  </footer>
+
+  <script>
+    
+    const canvas = document.getElementById("estrellas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let estrellas = [];
+    for (let i = 0; i < 200; i++) {
+      estrellas.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2,
+        d: Math.random() * 1
+      });
+    }
+
+    function dibujarEstrellas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      for (let i = 0; i < estrellas.length; i++) {
+        let s = estrellas[i];
+        ctx.moveTo(s.x, s.y);
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+      }
+      ctx.fill();
+      moverEstrellas();
+    }
+
+    function moverEstrellas() {
+      for (let i = 0; i < estrellas.length; i++) {
+        let s = estrellas[i];
+        s.y += s.d;
+        if (s.y > canvas.height) {
+          estrellas[i] = { x: Math.random() * canvas.width, y: 0, r: s.r, d: s.d };
+        }
+      }
+    }
+
+    setInterval(dibujarEstrellas, 50);
+  </script>
+</body>
+</html>
